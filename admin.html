@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background: url("{{ url_for('static', filename='images/back.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            width: 90%;
+            height: 80vh;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            flex-direction: row;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100%;
+            background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            border-radius: 20px 0 0 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            animation: slideIn 1s ease-in-out;
+            position: relative;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .sidebar a {
+            color: white;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        .sidebar img {
+            margin-top: auto;
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            background-color: white;
+            border-radius: 0 20px 20px 0;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeInContent 1.5s ease;
+            overflow-y: auto;
+            max-height: 100%;
+        }
+
+        @keyframes fadeInContent {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: #34495e;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 50%; /* Reduced width */
+            padding: 8px;
+            font-size: 14px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .button-container button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .button-container button:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+        }
+
+        .form-container {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .form-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .form-container::-webkit-scrollbar-thumb {
+            background-color: #3498db;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .container {
+                flex-direction: column;
+                height: auto;
+                width: 100%;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                margin-bottom: 20px;
+                border-radius: 20px;
+                box-shadow: none; /* Remove shadow on small screens for better performance */
+            }
+
+            .content {
+                width: 100%;
+                height: auto;
+                border-radius: 20px;
+                box-shadow: none; /* Remove shadow on small screens for better performance */
+            }
+
+            .form-group input,
+            .form-group select {
+                width: 100%;
+            }
+        }
+        .admin-info {
+            display: block; /* Show by default */
+            text-align: left; /* Align text to the left */
+            margin: 0; /* Remove margins */
+            font-size: 18px;
+            color: #178888;
+            padding: 10px;
+            transition: opacity 0.5s ease; /* Smooth transition */
+            position: absolute; /* Position absolutely */
+            top: 10px; /* Top offset */
+            left: 10px; /* Left offset */
+            background-color: rgba(255, 255, 255, 0.8); /* Add a slight background for readability */
+            border-radius: 8px; /* Rounded corners */
+            z-index: 10; /* Ensure it is on top */
+        }
+
+        .admin-info.hidden {
+            display: none; /* Hide when the "hidden" class is added */
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            background-color: white;
+            border-radius: 0 20px 20px 0;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeInContent 1.5s ease;
+            overflow-y: auto;
+            max-height: 100%;
+            position: relative; /* Position for absolute elements */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Admin</h2>
+            <a href="#" onclick="navigateToDashboard()">Dashboard</a>
+            <a href="#" onclick="showContent('doctor-register')">Register</a>
+            <img src="{{ url_for('static', filename='images/man-typing-computer.webp') }}" alt="Sidebar GIF">
+        </div>
+
+        <div class="content">
+
+            <div id="admin-info" class="admin-info">
+                <h1>Welcome</h1><br>
+                <p style="font-size:13px;">Click Dashboard to see the Overall dashboard</p>
+            </div>
+
+            <div id="doctor-register" class="content-section">
+                <h1>Register Doctor</h1>
+                    <div style="height: 20px;"></div> <!-- Added empty space after title -->
+                <div class="form-container">
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="DoctorID">Doctor ID:</label>
+                            <input type="text" id="DoctorID" name="DoctorID" placeholder="Enter Doctor ID" required>
+                            <small id="doctorIDError" class="form-text text-danger" style="display: none;">Invalid Doctor ID</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="DoctorName">Doctor Name:</label>
+                            <input type="text" id="DoctorName" name="DoctorName" placeholder="Enter Doctor Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="PhoneNumber">Phone Number:</label>
+                            <input type="tel" id="PhoneNumber" name="PhoneNumber" placeholder="Enter Phone Number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Password">Password:</label>
+                            <input type="Password" id="Password" name="Password" placeholder="Enter Password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Address">Address:</label>
+                            <input type="text" id="Address" name="Address" placeholder="Enter Address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="SpecializationIn">Specialized In:</label>
+                            <input type="text" id="SpecializationIn" name="SpecializationIn" placeholder="Enter Specialization" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="JoiningDate">Started Working Date:</label>
+                            <input type="date" id="JoiningDate" name="JoiningDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Gender">Gender:</label>
+                            <select id="Gender" name="Gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="button-container">
+                            <button type="submit">Register Doctor</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function navigateToDashboard() {
+        window.location.href = '{{ url_for("dashboard") }}';
+    }
+
+        function showContent(sectionId) {
+            var contentSections = document.getElementsByClassName('content-section');
+            for (var i = 0; i < contentSections.length; i++) {
+                contentSections[i].classList.remove('active');
+            }
+
+            // Hide admin info text when switching sections
+            document.getElementById('admin-info').classList.add('hidden');
+
+            var selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.classList.add('active');
+            }
+        }
+
+        // Handle form submission using JavaScript and AJAX
+        document.getElementById('registerForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+            const formData = new FormData(this);
+
+            fetch('/register-doctor', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message); // Show success or error message
+                if (data.success) {
+                    document.getElementById('registerForm').reset(); // Reset form after successful submission
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+    
+</body>
+
+</html>

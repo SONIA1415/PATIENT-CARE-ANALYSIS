@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles1.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <title>CareSync Healthcare Interface</title>
+</head>
+<body>
+    
+    <div class="Nota-Serif">
+        <div class="glass-navbar">
+            Patient Care Analysis and Outreach
+        </div>    
+    </div>
+    <span>
+        <div class="chatbot-container">
+            <!-- Auto-hide and reveal text -->
+            <div class="auto-hide-reveal-text">Need help Karen here!</div>
+        </div>
+    <div class="container">
+        <div class="navbar">
+            <img src="{{ url_for('static', filename='images/logo-Photoroom.png') }}" alt="Logo">
+            <div class="typing-container" id="typing-text">CareSync</div>
+        </div>
+        <div class="content">
+            <div class="section">
+                <a href="{{ url_for('home2') }}">
+                    <img src="{{ url_for('static', filename='images/pediatrics_7858216.png') }}" alt="Admin">
+                    <h2>Employers</h2>
+                </a>
+                <ul>
+                    <li>Administer the healthcare system</li>
+                    <li>Manage patient records</li>
+                    <li>Oversee overall operations</li>
+                </ul>
+            </div>
+            <div class="section">
+                <a href="{{ url_for('login1') }}">
+                    <img src="{{ url_for('static', filename='images/vecteezy_doctor-with-stethoscope-avatar_6042512.jpg') }}" alt="Patient">
+                    <h2>Patient</h2>
+                </a>
+                <ul>
+                    <li>Manage your health information</li>
+                    <li>Schedule appointments</li>
+                    <li>Interact with healthcare providers</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</span>
+    <div class="glass-footer">
+        <p>&copy; 2024 CareSync Healthcare Solutions. All rights reserved. | Privacy Policy | Terms of Service</p>
+    </div>
+    <script src="{{ url_for('static', filename='js/script1.js') }}"></script>
+</body>
+</html>

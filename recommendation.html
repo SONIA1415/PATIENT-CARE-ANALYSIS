@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareSync Recommendation Page</title>
+    <style>
+        /* Basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #c8b6ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #fff;
+        }
+
+        /* Sidebar Container */
+        .sidebar-container {
+            width: 100px;
+            background-color: #f4f7fc;
+            position: fixed;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            position: fixed;
+            width: 200px;
+            height: 100%;
+            background-color: #f4f7fc;
+            top: 0;
+            left: 0;
+            padding-top: 50px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            transform: translateX(-100%);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar.active {
+            background-color: #f4f7fc;
+            transform: translateX(0);
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar ul li a {
+            color: #5A67D8;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            width: 100%;
+            padding: 15px 0;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sidebar ul li a img {
+            margin-right: 10px;
+            vertical-align: middle;
+            filter: invert(32%) sepia(69%) saturate(5031%) hue-rotate(211deg) brightness(98%) contrast(97%);
+        }
+
+        .sidebar ul li a:hover img {
+            filter: brightness(1.2) invert(32%) sepia(69%) saturate(5031%) hue-rotate(211deg) brightness(98%) contrast(97%);
+        }
+
+        /* Hover effect */
+        .sidebar ul li:hover {
+            background-color: #B794F4;
+        }
+
+        /* Button to open sidebar */
+        .open-btn {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            background-color: #f4f7fc;
+            color: black;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 30px;
+            z-index: 100;
+        }
+
+        /* Main content container */
+        .main-content {
+            margin-left: 100px;
+            padding: 10px;
+            width: 100%;
+            background-color: #ffffff;
+            display: flex; /* Flexbox for side-by-side layout */
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        /* Container for Medical History */
+        .medical-history-container {
+            background-color: #a0e7e5;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            max-width: 45%; /* Adjust width for side-by-side */
+            width: 100%;
+            text-align: center;
+            margin-right: 10px;
+        }
+        .medical-history-container h2{
+            color:#333;
+        }
+        .card {
+            background-color: #a0e7e5;
+            padding: 15px;
+            margin-bottom: 40px;
+        }
+
+        .card p {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .hidden-content {
+            display: none;
+            margin-top: 5px;
+        }
+
+        .recommend-btn {
+            background-color: #5bc0be;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .recommend-btn:hover {
+            background-color: #3a9298;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .download-btn {
+            background-color: #5bc0be;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            background-color: #218838;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Styles for the recommendation section */
+        .recommendation-container {
+            background-color: #b8f1ed;
+            padding: 21px;
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            max-width: 45%; /* Adjust width for side-by-side */
+            width: 100%;
+            text-align: center;
+        }
+
+        .recommendation-container h2 {
+            color: #333;
+        }
+
+        .recommendation-container p {
+            font-size: 18px;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column; /* Stack containers on small screens */
+            }
+
+            .medical-history-container, .recommendation-container {
+                max-width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <button class="open-btn" onclick="toggleSidebar()">☰ CareSync</button>
+    <div class="sidebar-container">
+        <div class="sidebar" id="sidebar">
+            <ul>
+                <li><a href="{{ url_for('profile') }}"><img src="https://img.icons8.com/material-outlined/24/ffffff/user-male-circle.png" alt="Profile Icon" title="Profile Icon"/> Profile Page</a></li>
+                <li><a href="{{ url_for('dashboard') }}"><img src="https://img.icons8.com/material-outlined/24/ffffff/dashboard-layout.png" alt="Dashboard Icon" title="Dashboard Icon"/> Dashboard</a></li>
+                <li><a href="{{ url_for('recommendation') }}"><img src="https://img.icons8.com/material-outlined/24/ffffff/heart-health.png" alt="Recommendation Icon" title="Recommendation Icon"/> Recommendation</a></li>
+                <li><a href="{{ url_for('feedback') }}"><img src="https://img.icons8.com/material-outlined/24/ffffff/feedback.png" alt="History Icon" title="History Icon"/> Feedback</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Medical History Container -->
+        <div class="medical-history-container">
+            <h2>Medical History</h2>
+            <br>
+            <p>This pdf contains all the personal details of patients</p>
+            <div class="card">
+                <div class="hidden-content">
+                    <table class="patient-table">
+                        <tr><th>Patient ID</th><td>{{patient_id}}</td></tr>
+                        <tr><th>Name</th><td>{{Name}}</td></tr>
+                        <tr><th>Gender</th><td>{{Gender}}</td></tr>
+                        <tr><th>Age</th><td>{{Age}}</td></tr>
+                        <tr><th>Address</th><td>{{Address}}</td></tr>
+                        <tr><th>Contact Details</th><td>{{Contact}}</td></tr>
+                        <tr><th>Attender</th><td>{{Attender}}</td></tr>
+                        <tr><th>Systolic BP</th><td>{{Systolic_BP}}</td></tr>
+                        <tr><th>Diastolic BP</th><td>{{Diastolic_BP}}</td></tr>
+                        <tr><th>Fasting Glucose</th><td>{{Fasting_Glucose}}</td></tr>
+                        <tr><th>Postprandial Glucose</th><td>{{Postprandial_Glucose}}</td></tr>
+                        <tr><th>Diagnosed With</th><td>{{Diagnosed_With}}</td></tr>
+                        <tr><th>Type of BP</th><td>{{Type_of_BP}}</td></tr>
+                        <tr><th>Type of Diabetes</th><td>{{Type_of_Diabetes}}</td></tr>
+                        <tr><th>Doctor Referred</th><td>{{Doctor_Referred}}</td></tr>
+                        <tr><th>Diet Plan</th><td>Low sodium, balanced meals</td></tr>
+                        <tr><th>Exercise Plan</th><td>30 mins of walking daily</td></tr>
+                        <tr><th>Medication Plan</th><td>Metformin, Lisinopril</td></tr>
+                    </table>
+                </div>
+            </div>
+            <!-- Download Button -->
+            <button class="download-btn" id="download-btn">Download Report</button>
+        </div>
+
+        <!-- Recommendation Container -->
+        <div class="recommendation-container">
+            <h2>Patient ID</h2>
+            <form method="POST" action="/recommendation">
+                <p>This page is for diet chart planner based on <br>patient BP and Glucose levels</p>
+                <br>
+                <button type="submit" name="diet_recommendation" class="recommend-btn">Recommendation of Diet Chart</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Include jsPDF library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+        // Function to toggle the visibility of cards
+        function toggleCard(cardElement) {
+            const hiddenContent = cardElement.querySelector('.hidden-content');
+            hiddenContent.style.display = hiddenContent.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Function to download the report as a PDF
+        document.getElementById('download-btn').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(18);
+            doc.text('Patient Report', 105, 20, null, null, 'center');
+
+            const details = [
+            ['Patient ID', '{{patient_id}}'],
+            ['Name', '{{Name}}'],
+            ['Gender', '{{Gender}}'],
+            ['Age', '{{Age}}'],
+            ['Address', '{{Address}}'],
+            ['Contact Details', '{{Contact}}'],
+            ['Attender', '{{Attender}}'],
+            ['Systolic BP', '{{SystolicBP}}'],
+            ['Diastolic BP', '{{DiastolicBP}}'],
+            ['Fasting Glucose', '{{FastingGlucose}}'],
+            ['Postprandial Glucose', '{{PostprandialGlucose}}'],
+            ['Diagnosed With', '{{DiagnosedWith}}'],
+            ['Type of BP', '{{TypeofBP}}'],
+            ['Type of Diabetes', '{{TypeofDiabetes}}'],
+            ['Doctor Referred', '{{DoctorReferred}}'],   
+            ['Number of days Admitted','{{NoofDaysAdmitted}}']        
+            ];
+
+            let yPosition = 30;
+            doc.setFontSize(12);
+
+            details.forEach(([label, value]) => {
+                doc.text(`${label}: ${value}`, 20, yPosition);
+                yPosition += 10;
+            });
+
+            doc.save('patient-report.pdf');
+        });
+
+        // Sidebar toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
+

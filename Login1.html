@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <!-- Latest Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@100..800&family=Pirata+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles2.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Left Side with Image -->
+        <div class="left-side">
+            <img src="{{ url_for('static', filename='images/patient11-Photoroom.png') }}" alt="Left Side Image">
+        </div>
+        <!-- Right Side with Form -->
+        <div class="right-side">
+            <h2 class="pirata-one-regular">Login to Your Profile</h2>
+            <form id="loginForm" action="{{ url_for('login1') }}" method="POST">
+                <div class="form-group">
+                    <p class="Nota-Serif">Patient ID:</p>
+                    <input type="text" id="PatientID" name="PatientID" placeholder="Enter Patient ID" required>
+                </div>
+                <div class="form-group">
+                    <p class="Nota-Serif">Phone Number:</p>
+                    <input type="text" id="ContactDetails" name="ContactDetails" placeholder="Enter Contact Number" required>
+                </div>
+                <div class="button-container">
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script2.js') }}"></script>
+</body>
+</html>

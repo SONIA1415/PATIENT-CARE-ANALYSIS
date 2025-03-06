@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor and Nurse Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles4.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>+
+</head>
+<body>
+    <div id="doctor-form" class="form-container active">
+        <div class="container doctor-height">
+            <div class="left-panel">
+                <div class="toggle-container">
+                    <button type="button" class="toggle-btn active" id="doctor-btn">Doctor</button>
+                    <button type="button" class="toggle-btn" id="nurse-btn">Nurse</button>
+                </div>
+                <h2 class="jersey-10-regular">Welcome Doctor</h2>
+                <p>Please Enter your Account details</p>
+                <form id="loginFormDoctor" method="post" action="{{ url_for('doctor_nurse_login') }}">
+                    <input type="hidden" name="user_type" value="doctor">
+                    <div class="big">
+                        <p class="Nota-Serif">Doctor ID:</p>
+                        <input type="text" name="user_id" id="DoctorID" placeholder="Enter DoctorID" required>
+                        <p class="Nota-Serif">Password:</p>
+                        <input type="password" name="password" id="DoctorPassword" placeholder="Enter Password" required>
+                    </div>
+                    <div class="b-con">
+                        <div class="button-container">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="right-panel">
+                <img src="{{ url_for('static', filename='images/doc.png') }}" alt="Doctor Image">
+            </div>
+        </div>
+    </div>
+
+    <div id="nurse-form" class="form-container">
+        <div class="container nurse-height">
+            <div class="left-panel">
+                <div class="toggle-container">
+                    <button class="toggle-btn" id="doctor-btn-nurse">Doctor</button>
+                    <button class="toggle-btn active" id="nurse-btn">Nurse</button>
+                </div>
+                <h2 class="jersey-10-regular">Welcome Nurse</h2>
+                <p>Please Enter your Account details</p>
+                <form id="loginFormNurse" method="post" action="{{ url_for('doctor_nurse_login') }}">
+                    <input type="hidden" name="user_type" value="nurse">
+                    <div class="big">
+                        <p class="Nota-Serif">Nurse ID:</p>
+                        <input type="text" name="user_id" id="NurseID" placeholder="Enter NurseID" required>
+                        <p class="Nota-Serif">Password:</p>
+                        <input type="password" name="password" id="NursePassword" placeholder="Enter Password" required>
+                    </div>
+                    <div class="b-con">
+                        <div class="button-container">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="right-panel">
+                <img src="{{ url_for('static', filename='images/medical-5459650.png') }}" alt="Nurse Image">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const doctorBtn = document.getElementById('doctor-btn');
+            const nurseBtn = document.getElementById('nurse-btn');
+            const doctorForm = document.getElementById('doctor-form');
+            const nurseForm = document.getElementById('nurse-form');
+        
+            if (doctorBtn && nurseBtn && doctorForm && nurseForm) {
+                doctorBtn.addEventListener('click', function() {
+                    doctorForm.classList.add('active');
+                    nurseForm.classList.remove('active');
+                    doctorBtn.classList.add('active');
+                    nurseBtn.classList.remove('active');
+                });
+        
+                nurseBtn.addEventListener('click', function() {
+                    nurseForm.classList.add('active');
+                    doctorForm.classList.remove('active');
+                    nurseBtn.classList.add('active');
+                    doctorBtn.classList.remove('active');
+                });
+        
+                // Set initial visibility state
+                doctorForm.classList.add('active');
+            } else {
+                console.error('One or more elements are missing.');
+            }
+        });
+    </script>
+</body>
+</html>

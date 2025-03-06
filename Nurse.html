@@ -1,0 +1,178 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles5.css') }}">
+        
+        <title>Nurse Page</title>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <h2>Nurse</h2>
+                <ul>
+                    <li><a href="#" onclick="loadContent('Profile')">Profile</a></li>
+                    <li><a href="#" onclick="loadContent('patientRegister')">Patient Register</a></li>
+                </ul>
+                <img src="{{ url_for('static', filename='images/health-5010_256.gif') }}" alt="Nurse Icon">
+            </div>
+            <!-- Content -->
+            <div class="content" id="content-area">
+                <h1>Welcome</h1>
+                    <p style="font:18px;">Consider as per Your Requirements from the SideBar.</p>
+            </div>
+        </div>
+        <script>
+            function loadContent(page) {
+                var contentArea = document.getElementById('content-area');
+
+                if (page === 'Profile') {
+                    contentArea.innerHTML = `
+                        <h1>Profile</h1>
+                        <div class="main-content">
+                            <!-- Doctor Info Header -->
+                            <div class="header">
+                                <img src="{{ url_for('static', filename='images/nurse.png') }}" alt="Profile Photo">
+                                <div class="value" id="NurseName" style="font-size: 18px; color: #fff;">{{ nurse.NurseName }}</div>
+                            </div>
+
+                            <!-- Details Section -->
+                            <div class="details">
+                                <div class="detail-item">
+                                    <img src="{{ url_for('static', filename='images/nurse1.png') }}" alt="Nurse Icon">
+                                    <p>Nurse ID: </p>
+                                    <div class="value" id="NurseID">{{ nurse.NurseID }}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <img src="{{ url_for('static', filename='images/MorF-Photoroom.png') }}" alt="Gender Icon">
+                                    <p>Gender: </p>
+                                    <div class="value" id="Gender">{{ nurse.Gender }}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <img src="{{ url_for('static', filename='images/images1-Photoroom.png') }}" alt="Address Icon">
+                                    <p>Address: </p>
+                                    <div class="value" id="Address">{{ nurse.Address }}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <img src="{{ url_for('static', filename='images/images-Photoroom.png') }}" alt="Contact Details Icon">
+                                    <p>Contact: </p>
+                                    <div class="value" id="PhoneNumber">+91{{ nurse.PhoneNumber }}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <img src="{{ url_for('static', filename='images/DAY-Photoroom.png') }}" alt="Joined Date Icon">
+                                    <p>Joined Date: </p>
+                                    <div class="value" id="JoinedDate">{{ nurse.JoinedDate }}</div>
+                                </div>
+                            </div>
+                        </div>`;
+                } else if (page === 'patientRegister') {
+                    contentArea.innerHTML = `
+                        <div class="form-section">
+                            <h1>Patient Register</h1>
+                            <div class="form-container">
+                                <form id="registration-form">
+                                    <div class="form-group">
+                                        <label for="PatientID">Patient ID</label>
+                                        <input type="text" id="PatientID" name="PatientID" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Name">Name</label>
+                                        <input type="text" id="Name" name="Name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Gender">Gender</label>
+                                        <select id="Gender" name="Gender" required>
+                                            <option value="">Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Age">Age</label>
+                                        <input type="number" id="Age" name="Age" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Address">Address</label>
+                                        <input type="text" id="Address" name="Address" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ContactDetails">Contact Details</label>
+                                        <input type="text" id="ContactDetails" name="ContactDetails" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Attender">Attender</label>
+                                        <input type="text" id="Attender" name="Attender">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="SystolicBP">Systolic BP</label>
+                                        <input type="number" id="SystolicBP" name="SystolicBP">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="DiastolicBP">Diastolic BP</label>
+                                        <input type="number" id="DiastolicBP" name="DiastolicBP">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="FastingGlucose">Fasting Glucose</label>
+                                        <input type="number" id="FastingGlucose" name="FastingGlucose">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="PostprandialGlucose">Postprandial Glucose</label>
+                                        <input type="number" id="PostprandialGlucose" name="PostprandialGlucose">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="DiagnosedWith">Diagnosed With</label>
+                                        <input type="text" id="DiagnosedWith" name="DiagnosedWith">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="TypeofBP">Type of BP</label>
+                                        <input type="text" id="TypeofBP" name="TypeofBP">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="TypeofDiabetes">Type of Diabetes</label>
+                                        <input type="text" id="TypeofDiabetes" name="TypeofDiabetes">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="DoctorReferred">Doctor Referred</label>
+                                        <input type="text" id="DoctorReferred" name="DoctorReferred">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Register Patient">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    `;
+
+                    // Add event listener for form submission
+                    document.getElementById('registration-form').addEventListener('submit', submitForm);
+                }
+            }
+
+            function submitForm(event) {
+                event.preventDefault();  // Prevent the default form submission
+
+                // Get form data
+                const formData = new FormData(document.getElementById('registration-form'));
+                
+                // Send AJAX request to register patient
+                fetch('/register_patient', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert(data.message);  // Show success message
+                        loadContent('patientRegister');  // Reload the form
+                    } else if (data.status === 'error') {
+                        alert(data.message);  // Show error message for duplicate PatientID
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        </script>
+    </body>
+    </html>

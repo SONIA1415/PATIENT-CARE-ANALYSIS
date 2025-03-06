@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Page</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #1C3F3F  !important;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            height: 90%;
+            border-radius: 30px;
+            overflow: hidden;
+            background-color: #1E5A58; /* Dark background for the main container */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 100%;
+            max-width: 300px;
+            background-color: #FFFFFF; /* Light background for the sidebar */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-top-right-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: slideInLeft 1s forwards 0.3s;
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .sidebar h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            width: 100%;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            width: 100%;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #fff; /* White text color for better visibility */
+            font-size: 18px; /* Adjusted font size for better readability */
+            padding: 15px 30px; /* Increased padding for larger clickable area */
+            display: block;
+            background-color: #1E5A58; /* Dark green background color for the button */
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #174d49; /* Slightly darker green on hover */
+            transform: scale(1.05);
+            color: #fff; /* White text color on hover */
+        }
+
+        .sidebar img {
+            width: 80%;
+            border-radius: 20px;
+            margin-top: auto;
+        }
+
+        /* Content Styling */
+        .content {
+            flex: 1;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.2); /* Light background for content */
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+            opacity: 0;
+            transform: translateX(50px);
+            animation: slideInRight 1s forwards 0.6s;
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .content h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #667eea; /* Dark blue color for headings */
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .content p {
+            font-size: 16px;
+            line-height: 1.6;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        /* Patient Info Styling */
+        .main-content {
+            margin-top: 20px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        .header img {
+            width: 80px; /* Adjusted size for responsiveness */
+            height: 80px; /* Adjusted size for responsiveness */
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            background: #f1f1f1; /* Light gray background for detail items */
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .detail-item img {
+            width: 25px; /* Adjusted size for responsiveness */
+            height: 25px; /* Adjusted size for responsiveness */
+            margin-right: 10px;
+        }
+
+        .detail-item p {
+            font-weight: bold;
+            margin-right: 5px;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .value {
+            font-size: 14px; /* Adjusted font size for better responsiveness */
+            color: #555;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-width: none;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .content {
+                width: 100%;
+                max-width: none;
+                border-radius: 0;
+                box-shadow: none;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar ul li a {
+                font-size: 16px; /* Smaller font size for smaller screens */
+                padding: 12px 20px; /* Adjusted padding for smaller screens */
+            }
+
+            .content h1 {
+                font-size: 22px; /* Adjusted font size for smaller screens */
+            }
+
+            .content p {
+                font-size: 14px; /* Adjusted font size for smaller screens */
+            }
+
+            .details {
+                grid-template-columns: 1fr; /* Stack details vertically on small screens */
+            }
+
+            .header img {
+                width: 60px; /* Smaller profile image for smaller screens */
+                height: 60px; /* Smaller profile image for smaller screens */
+            }
+
+            .header h1 {
+                font-size: 20px; /* Smaller header text for smaller screens */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Doctor</h2>
+            <ul>
+                <li><a href="#" onclick="loadContent('Profile')">Profile</a></li>
+            </ul>
+            <img src="{{ url_for('static', filename='images/health-5010_256.gif') }}" alt="Doctor Icon">
+        </div>
+
+        <div class="content" id="content-area">
+            <h1>Welcome</h1>
+            <p>Choose an option from the menu to see more details.</p>
+        </div>
+    </div>
+    <script>
+        // Function to load content dynamically based on the menu selection
+        function loadContent(page) {
+            var contentArea = document.getElementById('content-area');
+
+            if (page === 'Profile') {
+                contentArea.innerHTML = `
+                    <h1>Profile</h1>
+                    <div class="main-content">
+                        <!-- Doctor Info Header -->
+                        <div class="header">
+                           <img src="{{ url_for('static', filename='images/doctor_icon.png') }}" alt="Profile Photo">
+                            <div class="value" id="DoctorName" style="font-size: 18px; color: #fff;font-family: "Noto Serif", serif; font-variation-settings:"wdth" 100;">{{ doctor.DoctorName }}</div>
+                        </div>
+
+                        <!-- Details Section -->
+                        <div class="details">
+                            <div class="detail-item">
+                                <img src="{{ url_for('static', filename='images/persOn-Photoroom.png') }}" alt="Patient ID Icon">
+                                <p>Doctor ID: </p>
+                                <div class="value" id="DoctorID">{{ doctor.DoctorID }}</div>
+                            </div>
+                            <div class="detail-item">
+                                <img src="{{ url_for('static', filename='images/Specialized.png') }}" alt="Doctor Referred Icon">
+                                <p>Specialized In: </p>
+                                <div class="value" id="SpecializedIn">{{ doctor.SpecializedIn }}</div>
+                            </div>
+                            <div class="detail-item">
+                                <img src="{{ url_for('static', filename='images/MorF-Photoroom.png') }}" alt="Gender Icon">
+                                <p>Gender: </p>
+                                <div class="value" id="Gender"> {{ doctor.Gender }}</div>
+                            </div>
+                            <div class="detail-item">
+                                <img src="{{ url_for('static', filename='images/images1-Photoroom.png') }}" alt="Age Icon">
+                                <p>Address: </p>
+                                <div class="value" id="Address">{{ doctor.Address }}</div>
+                            </div>
+                            <div class="detail-item">
+                                <img src="{{ url_for('static', filename='images/images-Photoroom.png') }}" alt="Contact Details Icon">
+                                <p>Contact: </p>
+                                <div class="value" id="PhoneNumber">+91{{ doctor.PhoneNumber }}</div>
+                            </div>
+                            <div class="detail-item">
+                                <img src="{{ url_for('static', filename='images/DAY-Photoroom.png') }}" alt="Contact Details Icon">
+                                <p>Joined Date: </p>
+                                <div class="value" id="JoiningDate">{{ doctor.JoiningDate }}</div>
+                            </div>
+                        </div>
+                    </div>`;
+            }
+        }
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
